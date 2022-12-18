@@ -45,3 +45,32 @@ function rank_results(results) {
 
 	return sorted;
 }
+
+document.body.addEventListener("click", (e) => {
+	let element = false;
+	let elements = e.path;
+	let is_content = false;
+	for (let i = 0; i < elements.length; i++) {
+		if (! elements[i] || ! elements[i].classList) {
+			continue;
+		}
+
+		if (elements[i].classList.contains("content")) {
+			is_content = true;
+		}
+
+		if (elements[i].classList.contains("result") && ! is_content) {
+			element = elements[i];
+		}
+	}
+
+	console.log(element)
+	if (is_content || ! element) {return}
+
+	let content = element.querySelector(".content");
+	if (! content || ! content.classList) {
+		return;
+	}
+
+	element.querySelector(".content").classList.toggle("open");
+})

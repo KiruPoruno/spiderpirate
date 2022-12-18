@@ -34,6 +34,10 @@ body {
 	justify-content: center;
 }
 
+a:any-link, a:visited {
+	color: var(--main); 
+}
+
 input, body, button {
 	color: var(--fg);
 	font-family: "Roboto Mono", monospace;
@@ -59,7 +63,7 @@ input, body, button {
 	}
 }
 
-#input {
+input {
 	width: 100%;
 	outline: none;
 	background: var(--input);
@@ -69,4 +73,32 @@ input, body, button {
 	border-radius: calc(var(--radius) / 2);
 }
 
-#input:focus {border: var(--inputborder) 3px solid}
+input:focus {border: var(--inputborder) 3px solid}
+
+.result .header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.result .header .cell:first-child {
+	width: 50%;
+	cursor: pointer;
+	text-align: left;
+	font-weight: 600;
+}
+
+.result .header .cell {
+	width: 25%;
+	text-align: center;
+}
+
+.content {
+	max-height: 0px;
+	overflow: hidden;
+	transition: max-height 0.2s ease-in-out;
+}
+
+.content.open {
+	max-height: 100vh;
+}
