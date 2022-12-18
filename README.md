@@ -66,9 +66,9 @@ supported.
 This returns back an array of all the sources the backend has setup and
 supports.
 
-#### Who's the handsome fella/mascot?
+<img align="right" src="www/preview.png" width="500px" title="kevin looking mighty fine">
 
-<img align="right" src="www/logo.png" width="420px" title="kevin looking mighty fine">
+#### Who's the handsome fella/mascot?
 
 That would be kevin, he's very handsome and he says thanks for the
 compliments,  he was drawn by [Ode N.](https://ode-n.carrd.co)
