@@ -1,6 +1,6 @@
 {
 	"proxies": {
-		"tpb": "",
-		"leetx": ""
+		"tpb": false,
+		"leetx": false
 	}
 }

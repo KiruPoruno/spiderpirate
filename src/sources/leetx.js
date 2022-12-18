@@ -36,7 +36,7 @@ method.parse_dom = (data) => {
 			uploader: child(5),
 			date: child(3),
 
-			magnet: children[3].querySelector("a").href,
+			magnet: false,
 			
 			stats: {
 				size: child(4),
