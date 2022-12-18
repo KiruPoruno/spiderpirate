@@ -29,13 +29,14 @@ method.parse_dom = (data) => {
 
 		return_res.push({
 			source: "tpb",
-			source_pretty: "ThePirateBay",
+			source_pretty: "The Pirate Bay",
 
 			name: child(1),
 			category: child(0),
 			uploader: child(7),
 			date: child(2),
 
+			link: children[1].querySelector("a").href,
 			magnet: children[3].querySelector("a").href,
 			
 			stats: {

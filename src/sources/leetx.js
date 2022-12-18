@@ -1,6 +1,8 @@
 const get = require("../get");
 const jsdom = require("jsdom").JSDOM;
 
+const settings = require("../settings");
+
 let method = {};
 
 method.parse_dom = (data) => {
@@ -27,6 +29,9 @@ method.parse_dom = (data) => {
 			return children[num].textContent;
 		}
 
+		let link = children[0].querySelector(".name a:not(.icon)")
+		link = `https://${settings.proxies.leetx}${link.href}`;
+
 		return_res.push({
 			source: "leetx",
 			source_pretty: "1337x",
@@ -36,6 +41,7 @@ method.parse_dom = (data) => {
 			uploader: child(5),
 			date: child(3),
 
+			link: link,
 			magnet: false,
 			
 			stats: {
