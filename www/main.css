@@ -11,6 +11,7 @@
 
 	--main: #ECAFDA;
 	--min-width: 350px;
+	--max-width: 1100px;
 
 	--shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
 }
@@ -29,8 +30,11 @@
 
 
 body {
-	display: flex;
 	background: var(--bg);
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: start;
 	justify-content: center;
 }
 
@@ -43,16 +47,22 @@ input, body, button {
 	font-family: "Roboto Mono", monospace;
 }
 
+#logo {
+	width: 100vw;
+	text-align: center;
+	height: fit-content;
+}
+
 #main {
-	width: 30vw;
-	max-width: 500px;
+	width: 75vw;
+	height: fit-content;
+	max-width: var(--max-width);
 	min-width: var(--min-width);
 
 	background: var(--box);
 	box-shadow: var(--shadow);
 	border-radius: var(--radius);
 
-	position: fixed;
 	align-items: center;
 	padding: var(--padding);
 }
@@ -78,12 +88,17 @@ input:focus {border: var(--inputborder) 3px solid}
 .result .header {
 	width: 100%;
 	display: flex;
+	cursor: pointer;
+	border-radius: var(--radius);
 	justify-content: space-between;
+}
+
+.result:nth-child(odd) .header {
+	background: var(--input);
 }
 
 .result .header .cell:first-child {
 	width: 50%;
-	cursor: pointer;
 	text-align: left;
 	font-weight: 600;
 }
@@ -91,12 +106,17 @@ input:focus {border: var(--inputborder) 3px solid}
 .result .header .cell {
 	width: 25%;
 	text-align: center;
+	line-break: anywhere;
 }
 
 .content {
 	max-height: 0px;
 	overflow: hidden;
 	transition: max-height 0.2s ease-in-out;
+}
+
+.padding {
+	padding: calc(var(--padding) * 4) calc(var(--padding) * 2);
 }
 
 .content.open {
