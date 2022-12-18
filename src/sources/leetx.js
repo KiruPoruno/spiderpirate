@@ -98,6 +98,8 @@ method.parse_dom = (data, proxy = method.proxy) => {
 
 		let icon = children[0].querySelector("i").classList;
 
+		children[4].querySelector(".seeds").remove();
+
 		return_res.push({
 			source: method.source_name,
 			source_pretty: method.pretty_name,
