@@ -1,5 +1,6 @@
 const get = require("../get");
 const jsdom = require("jsdom").JSDOM;
+const { basename } = require("path");
 
 const settings = require("../settings");
 
@@ -65,8 +66,10 @@ function icon_to_category(icon) {
 let method = {};
 
 method.pretty_name = "1337x";
+method.source_name = basename(__filename).replace(/\.js$/, "");
+method.proxy = settings.proxies[method.source_name];
 
-method.parse_dom = (data) => {
+method.parse_dom = (data, proxy = method.proxy) => {
 	let dom = new jsdom(data);
 	let body = dom.window.document.body;
 
@@ -91,12 +94,12 @@ method.parse_dom = (data) => {
 		}
 
 		let link = children[0].querySelector(".name a:not(.icon)")
-		link = `https://${settings.proxies.leetx}${link.href}`;
+		link = `https://${proxy}${link.href}`;
 
 		let icon = children[0].querySelector("i").classList;
 
 		return_res.push({
-			source: "leetx",
+			source: method.source_name,
 			source_pretty: method.pretty_name,
 			name: child(0),
 			category: icon_to_category(icon),
@@ -117,7 +120,7 @@ method.parse_dom = (data) => {
 	return return_res;
 }
 
-method.search_to_dom = (proxy, query, callback = () => {}) => {
+method.search_to_dom = (proxy = method.proxy, query, callback = () => {}) => {
 	query = encodeURI(query);
 
 	get(`https://${proxy}/search/${query}/1/`, (data) => {
@@ -125,7 +128,7 @@ method.search_to_dom = (proxy, query, callback = () => {}) => {
 	});
 }
 
-method.search = (proxy, query, callback = () => {}) => {
+method.search = (proxy = method.proxy, query, callback = () => {}) => {
 	method.search_to_dom(proxy, query, (data) => {
 		callback(method.parse_dom(data));
 	})

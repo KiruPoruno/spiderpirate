@@ -1,13 +1,16 @@
 const get = require("../get");
 const jsdom = require("jsdom").JSDOM;
+const { basename } = require("path");
 
 const settings = require("../settings");
 
 let method = {};
 
 method.pretty_name = "RARBG";
+method.source_name = basename(__filename).replace(/\.js$/, "");
+method.proxy = settings.proxies[method.source_name];
 
-method.parse_dom = (data) => {
+method.parse_dom = (data, proxy = method.proxy) => {
 	let dom = new jsdom(data);
 	let body = dom.window.document.body;
 
@@ -28,10 +31,10 @@ method.parse_dom = (data) => {
 		}
 
 		let link = children[1].querySelector("a");
-		link = `https://${settings.proxies.rarbg}${link.href}`;
+		link = `https://${proxy}${link.href}`;
 
 		return_res.push({
-			source: "rarbg",
+			source: method.source_name,
 			source_pretty: method.pretty_name,
 
 			name: child(1).trim(),
@@ -53,7 +56,7 @@ method.parse_dom = (data) => {
 	return return_res;
 }
 
-method.search_to_dom = (proxy, query, callback = () => {}) => {
+method.search_to_dom = (proxy = method.proxy, query, callback = () => {}) => {
 	query = encodeURI(query);
 
 	get(`https://${proxy}/search/?search=${query}`, (data) => {
@@ -61,9 +64,9 @@ method.search_to_dom = (proxy, query, callback = () => {}) => {
 	});
 }
 
-method.search = (proxy, query, callback = () => {}) => {
+method.search = (proxy = method.proxy, query, callback = () => {}) => {
 	method.search_to_dom(proxy, query, (data) => {
-		callback(method.parse_dom(data));
+		callback(method.parse_dom(data, proxy));
 	})
 }
 

@@ -18,9 +18,15 @@ for (let i = 0; i < sources.length; i++) {
 		continue;
 	}
 
-	sources_object[no_extension] = require(
+	let pretty_name = require(
 		join(__dirname, "sources", no_extension)
-	).pretty_name
+	).pretty_name;
+
+	if (! pretty_name) {
+		continue
+	}
+
+	sources_object[no_extension] = pretty_name;
 
 	filtered_sources.push(sources[i]);
 	sources_without_extension.push(no_extension);
