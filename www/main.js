@@ -70,6 +70,53 @@ function render_results(results) {
 	let make_result = (result) => {
 		let link_domain = new URL(result.link).origin;
 
+		let seeders_color = "";
+		let seeders_title = "";
+		let leechers_color = "";
+		let leechers_title = "";
+
+		if (result.stats.seeders < 10) {
+			seeders_color = "yellow";
+			seeders_title = "There are very few seeders";
+		}
+
+		if (result.stats.seeders / result.stats.leechers <= 1.25) {
+			leechers_color = "yellow";
+			leechers_title = "There are a lot of leechers";
+		}
+
+		if (result.stats.seeders < result.stats.leechers) {
+			leechers_color = "red";
+			leechers_title = "There are more leechers than seeders";
+		}
+
+		if (result.stats.seeders / result.stats.leechers >= 1.8 &&
+			result.stats.seeders > 15) {
+
+			seeders_color = "green";
+			seeders_title = "There are a lot of seeders";
+		}
+
+		if (result.stats.leechers == 0) {
+			leechers_color = "green";
+			leechers_title = "Nobody is currently leeching on this torrent";
+		}
+
+		if (result.stats.seeders == 0) {
+			seeders_color = "red";
+			leechers_color = "red";
+			seeders_title = "Nobody is currently seeding this torrent";
+		}
+
+		if (result.stats.seeders == result.stats.leechers) {
+			seeders_color = "yellow";
+			leechers_color = "yellow";
+			let msg = "There's the same amount of seeders as leechers";
+
+			seeders_title = msg;
+			leechers_title = msg;
+		}
+
 		let content = `
 			<b>Source:</b> ${result.source_pretty}<br>
 			<b>Category:</b> ${result.category}<br>
@@ -91,10 +138,10 @@ function render_results(results) {
 					<div class="cell">
 						${result.name}
 					</div>
-					<div class="cell">
+					<div class="cell ${seeders_color}" title="${seeders_title}">
 						${result.stats.seeders}
 					</div>
-					<div class="cell">
+					<div class="cell ${leechers_color}" title="${leechers_title}">
 						${result.stats.leechers}
 					</div>
 					<div class="cell">
