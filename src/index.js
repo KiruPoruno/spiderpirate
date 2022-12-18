@@ -59,5 +59,5 @@ app.get("/sources", (req, res) => {
 
 let port = "15471";
 app.listen(port, () => {
-	console.log(`We're now running on port http://localhost:${port}, yay!`);
+	console.log(`We're now running on http://localhost:${port}, yay!`);
 });
