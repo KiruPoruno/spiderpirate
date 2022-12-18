@@ -46,8 +46,8 @@ method.parse_dom = (data) => {
 			
 			stats: {
 				size: child(4),
-				seeders: child(1),
-				leechers: child(2)
+				seeders: parseInt(child(1)) || 0,
+				leechers: parseInt(child(2)) || 0
 			}
 		})
 	}
