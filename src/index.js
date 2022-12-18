@@ -8,6 +8,7 @@ const settings = require("./settings");
 
 var sources = fs.readdirSync(join(__dirname, "sources"));
 
+var sources_object = {};
 var filtered_sources = [];
 var sources_without_extension = [];
 for (let i = 0; i < sources.length; i++) {
@@ -16,6 +17,10 @@ for (let i = 0; i < sources.length; i++) {
 	if (! settings.proxies[no_extension]) {
 		continue;
 	}
+
+	sources_object[no_extension] = require(
+		join(__dirname, "sources", no_extension)
+	).pretty_name
 
 	filtered_sources.push(sources[i]);
 	sources_without_extension.push(no_extension);
@@ -49,7 +54,7 @@ app.get("/search/:source/:query", (req, res) => {
 })
 
 app.get("/sources", (req, res) => {
-	return res.send(sources_without_extension);
+	return res.send(sources_object);
 })
 
 let port = "15471";

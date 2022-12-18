@@ -3,8 +3,6 @@ const jsdom = require("jsdom").JSDOM;
 
 const settings = require("../settings");
 
-let method = {};
-
 function icon_to_category(icon) {
 	let category = false;
 
@@ -64,6 +62,10 @@ function icon_to_category(icon) {
 	return category;
 }
 
+let method = {};
+
+method.pretty_name = "1337x";
+
 method.parse_dom = (data) => {
 	let dom = new jsdom(data);
 	let body = dom.window.document.body;
@@ -95,8 +97,7 @@ method.parse_dom = (data) => {
 
 		return_res.push({
 			source: "leetx",
-			source_pretty: "1337x",
-
+			source_pretty: method.pretty_name,
 			name: child(0),
 			category: icon_to_category(icon),
 			uploader: child(5),

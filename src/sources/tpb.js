@@ -3,6 +3,8 @@ const jsdom = require("jsdom").JSDOM;
 
 let method = {};
 
+method.pretty_name = "The Pirate Bay";
+
 method.parse_dom = (data) => {
 	let dom = new jsdom(data);
 	let body = dom.window.document.body;
@@ -29,7 +31,7 @@ method.parse_dom = (data) => {
 
 		return_res.push({
 			source: "tpb",
-			source_pretty: "The Pirate Bay",
+			source_pretty: method.pretty_name,
 
 			name: child(1),
 			category: child(0),
