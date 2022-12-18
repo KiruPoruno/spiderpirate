@@ -58,12 +58,14 @@ function render_results(results) {
 		`;
 
 		// hide result header
-		document.querySelector(".result").style.display = "none";
+		document.body.classList.add("no-results");
+		document.body.classList.remove("has-results");
 		return;
 	}
 
 	// show result header
-	document.querySelector(".result").style.display = "flex";
+	document.body.classList.add("has-results");
+	document.body.classList.remove("no-results");
 
 	let make_result = (result) => {
 		let link_domain = new URL(result.link).origin;
