@@ -1,0 +1,72 @@
+:root {
+	--padding: 8px;
+	--radius: var(--padding);
+	--transition: 0.05s ease-in-out;
+
+	--bg: #FFFFFF;
+	--fg: #000000;
+	--box: var(--bg);
+	--input: #F8F8F8;
+	--inputborder: var(--main);
+
+	--main: #ECAFDA;
+	--min-width: 350px;
+
+	--shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #242426;
+		--fg: #FFFFFF;
+		--box: #42444C;
+		--input: var(--bg);
+
+		--next: #FFFFFF;
+		--word: #B0B0B0;
+	}
+}
+
+
+body {
+	display: flex;
+	background: var(--bg);
+	justify-content: center;
+}
+
+input, body, button {
+	color: var(--fg);
+	font-family: "Roboto Mono", monospace;
+}
+
+#main {
+	width: 30vw;
+	max-width: 500px;
+	min-width: var(--min-width);
+
+	background: var(--box);
+	box-shadow: var(--shadow);
+	border-radius: var(--radius);
+
+	position: fixed;
+	align-items: center;
+	padding: var(--padding);
+}
+
+@media (max-width: 350px) {
+	:root {
+		--min-width: calc(100vw - calc(var(--padding) * 4));
+	}
+}
+
+#input {
+	width: 100%;
+	outline: none;
+	background: var(--input);
+	border: var(--input) 3px solid;
+	padding: calc(var(--padding) / 1.5);
+	transition: border var(--transition);
+	border-radius: calc(var(--radius) / 2);
+}
+
+#input:focus {border: var(--inputborder) 3px solid}

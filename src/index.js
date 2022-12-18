@@ -63,6 +63,8 @@ app.get("/sources", (req, res) => {
 	return res.send(sources_object);
 })
 
+app.use(express.static(join(__dirname, "../www")));
+
 let port = "15471";
 app.listen(port, () => {
 	console.log(`We're now running on http://localhost:${port}, yay!`);
