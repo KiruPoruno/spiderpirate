@@ -138,6 +138,10 @@ input:focus {border: var(--inputborder) 3px solid}
 	background: var(--input);
 }
 
+.result.head .header {
+	cursor: default;
+}
+
 .result .header .cell:first-child {
 	width: 50%;
 	text-align: left;
