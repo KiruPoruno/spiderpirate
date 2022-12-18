@@ -5,6 +5,65 @@ const settings = require("../settings");
 
 let method = {};
 
+function icon_to_category(icon) {
+	let category = false;
+
+	// applications
+	if (icon.contains("flaticon-apps")) {
+		category = "Apps > Application";
+	} if (icon.contains("flaticon-android")) {
+		category = "Apps > Android Application";
+	} if (icon.contains("flaticon-mac")) {
+		category = "Apps > macOS Application";
+	}
+
+	// books
+	if (icon.contains("flaticon-audiobook")) {
+		category = "Books > Audiobook";
+	} if (icon.contains("flaticon-ebook")) {
+		category = "Books > E-Book";
+	}
+
+	// other
+	if (icon.contains("flaticon-tutorial")) {
+		category = "Other > Tutorial";
+	} if (icon.contains("flaticon-sound")) {
+		category = "Other > Sounds";
+	}
+
+	// music
+	if (icon.contains("flaticon-album")) {
+		category = "Music > Album";
+	} if (icon.contains("flaticon-music-video")) {
+		category = "Music > Music Video";
+	} if (icon.contains("flaticon-lossless")) {
+		category = "Music > Lossless Music";
+	} if (icon.contains("flaticon-mp3")) {
+		category = "Music > MP3 Music";
+	} if (icon.contains("flaticon-radio")) {
+		category = "Music > Radio";
+	}
+
+	// video
+	if (icon.contains("flaticon-ninja-portrait")) {
+		category = "Video > Anime";
+	} if (icon.contains("flaticon-video-dual-sound")) {
+		category = "Video > Dual Audio";
+	} if (icon.contains("flaticon-hd")) {
+		category = "Video > H264 Video";
+	} if (icon.contains("flaticon-dvd")) {
+		category = "Video > DVD Video";
+	} if (icon.contains("flaticon-hd")) {
+		category = "Video > HD Video";
+	} if (icon.contains("flaticon-documentary")) {
+		category = "Video > Documentary";
+	} if (icon.contains("flaticon-divx")) {
+		category = "Video > Other Video";
+	}
+
+	return category;
+}
+
 method.parse_dom = (data) => {
 	let dom = new jsdom(data);
 	let body = dom.window.document.body;
@@ -32,12 +91,14 @@ method.parse_dom = (data) => {
 		let link = children[0].querySelector(".name a:not(.icon)")
 		link = `https://${settings.proxies.leetx}${link.href}`;
 
+		let icon = children[0].querySelector("i").classList;
+
 		return_res.push({
 			source: "leetx",
 			source_pretty: "1337x",
 
 			name: child(0),
-			category: false,
+			category: icon_to_category(icon),
 			uploader: child(5),
 			date: child(3),
 
