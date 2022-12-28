@@ -56,12 +56,17 @@ async function search(callback = () => {}, query, source) {
 
 	url += encodeURI(query);
 
-	let response = await fetch(url);
+	try {
+		let response = await fetch(url);
 
-	if (response.ok) {
-		callback(await response.json());
-	} else {
-		callback(false);
+		if (response.ok) {
+			callback(await response.json());
+		} else {
+			callback(false);
+		}
+	}catch(err) {
+		loading = false;
+		set_text("Something went wrong, please try again later");
 	}
 }
 
