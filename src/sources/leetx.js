@@ -49,7 +49,7 @@ function icon_to_category(icon) {
 		category = "Video > Anime";
 	} if (icon.contains("flaticon-video-dual-sound")) {
 		category = "Video > Dual Audio";
-	} if (icon.contains("flaticon-hd")) {
+	} if (icon.contains("flaticon-h264")) {
 		category = "Video > H264 Video";
 	} if (icon.contains("flaticon-dvd")) {
 		category = "Video > DVD Video";
