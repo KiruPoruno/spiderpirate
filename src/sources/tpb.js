@@ -2,6 +2,7 @@ const get = require("../get");
 const jsdom = require("jsdom").JSDOM;
 const { basename } = require("path");
 
+const size = require("../filesizes");
 const settings = require("../settings");
 
 let method = {};
@@ -47,7 +48,7 @@ method.parse_dom = (data, proxy = method.proxy) => {
 			magnet: children[3].querySelector("a").href,
 			
 			stats: {
-				size: child(4),
+				size: size(child(4)),
 				seeders: parseInt(child(5)) || 0,
 				leechers: parseInt(child(6)) || 0
 			}
