@@ -1,3 +1,52 @@
+var loading = false;
+var loader_count = 0;
+var loader_char = ".";
+var loader_reverse = false;
+
+var loader_chars = [
+	"[=      ]",
+	"[==     ]",
+	"[===    ]",
+	"[ ===   ]",
+	"[  ===  ]",
+	"[   === ]",
+	"[    ===]",
+	"[     ==]",
+	"[      =]",
+]
+
+setInterval(() => {
+	if (! loading) {
+		loader_count = 0;
+		loader_reverse = false;
+		document.body.classList.remove("loading");
+		return false;
+	}
+
+	document.body.classList.add("loading");
+
+	if (loader_reverse) {
+		loader_count--;
+	} else {
+		loader_count++;
+	}
+
+	set_text(
+		"Loading<br>" +
+		`<div class="loader">` +
+			loader_chars[loader_count] +
+		`</div>`
+	);
+
+	if (loader_count >= loader_chars.length - 1) {
+		loader_reverse = true;
+	}
+
+	if (loader_count <= 0) {
+		loader_reverse = false;
+	}
+}, 150)
+
 async function search(callback = () => {}, query, source) {
 	let url = location.origin + "/search/";
 
@@ -46,20 +95,28 @@ function rank_results(results) {
 	return sorted;
 }
 
+function set_text(text) {
+	results_div = document.getElementById("results");
+	results_div.innerHTML = "";
+
+	results_div.innerHTML = `
+		<div class="padding">
+			<center>${text}</center>
+		</div>
+	`;
+
+	// hide result header
+	document.body.classList.add("no-results");
+	document.body.classList.remove("has-results");
+}
+
 function render_results(results) {
 	results_div = document.getElementById("results");
 	results_div.innerHTML = "";
 
 	if (results.length == 0) {
-		results_div.innerHTML = `
-			<div class="padding">
-				<center>No results found</center>
-			</div>
-		`;
-
-		// hide result header
-		document.body.classList.add("no-results");
-		document.body.classList.remove("has-results");
+		loading = false;
+		set_text("No results found");
 		return;
 	}
 
@@ -160,6 +217,8 @@ function render_results(results) {
 	for (let i = 0; i < results.length; i++) {
 		make_result(results[i]);
 	}
+
+	loading = false;
 }
 
 let delay = 1000;
@@ -179,6 +238,7 @@ input.addEventListener("keyup", () => {
 		clearTimeout(timeout);
 	}
 
+	loading = true;
 	timeout = setTimeout(() => {
 		last_string = input.value;
 		search((res) => {

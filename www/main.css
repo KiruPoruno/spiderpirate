@@ -68,6 +68,29 @@ input, body, button {
 	filter: brightness(1.2);
 }
 
+.loading #logo {
+	animation-name: loading-scale;
+
+	animation-duration: 1.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes loading-scale {
+	0% {
+		transform: scale(1.0);
+		filter: brightness(1.0);
+	}
+	50% {
+		transform: scale(0.95);
+		filter: brightness(1.2);
+	}
+	100% {
+		transform: scale(1.0);
+		filter: brightness(1.0);
+	}
+}
+
 #main {
 	width: 75vw;
 	height: fit-content;
@@ -165,6 +188,10 @@ input:focus {border: var(--inputborder) 3px solid}
 .red {color: var(--red)}
 .green {color: var(--green)}
 .yellow {color: var(--yellow)}
+
+.loader {
+	white-space: pre;
+}
 
 .content {
 	max-height: 0px;
