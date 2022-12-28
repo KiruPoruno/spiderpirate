@@ -173,6 +173,10 @@ input:focus {border: var(--inputborder) 3px solid}
 	max-width: unset;
 }
 
+.result .header .cell:last-child {
+	text-align: right;
+}
+
 .result .header .cell {
 	width: 25%;
 	min-width: 85px;
