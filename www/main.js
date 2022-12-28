@@ -194,11 +194,11 @@ function render_results(results) {
 		}
 
 		let content = `
-			<b>Source:</b> ${result.source_pretty}<br>
-			<b>Category:</b> ${result.category}<br>
+			<b>Source:</b> ${result.source_pretty || "Unknown"}<br>
+			<b>Category:</b> ${result.category || "Unknown"}<br>
 			<b>Link to upload:</b> <a target="_blank" href="${result.link}">${link_domain}</a><br>
-			<b>Uploader:</b> ${result.uploader}<br>
-			<b>Upload date:</b> ${result.date}<br>
+			<b>Uploader:</b> ${result.uploader || "Unknown"}<br>
+			<b>Upload date:</b> ${result.date || "Unknown"}<br>
 		`;
 
 		if (result.magnet) {
