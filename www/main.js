@@ -110,6 +110,20 @@ function set_text(text) {
 	document.body.classList.remove("has-results");
 }
 
+// format bytes to proper readable size
+function format_bytes(bytes) {
+	let sizes = [
+		"bytes", "KB", "MB",
+		"GB", "TB", "PB", "EB",
+		"EB", "ZB", "YB", "RB", "QB"
+	]
+
+	if (bytes == 0) {return "0 bytes"}
+
+	let i = parseFloat(Math.floor(Math.log(bytes) / Math.log(1000)));
+	return Math.floor((bytes / Math.pow(1000, i) * 10)) / 10 + " " + sizes[i];
+}
+
 function render_results(results) {
 	results_div = document.getElementById("results");
 	results_div.innerHTML = "";
@@ -202,7 +216,7 @@ function render_results(results) {
 						${result.stats.leechers}
 					</div>
 					<div class="cell">
-						${result.stats.size}
+						${format_bytes(result.stats.size)}
 					</div>
 				</div>
 				<div class="content">
