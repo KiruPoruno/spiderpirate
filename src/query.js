@@ -13,7 +13,7 @@ function search(query, callback = () => {}) {
 		let source = sources[i].replace(/\.js$/, "");
 
 		if (! settings.proxies[source]) {
-			break;
+			continue;
 		}
 
 		let proxy = source;
