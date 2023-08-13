@@ -27,9 +27,13 @@ $ npm i
 $ node src/index.js
 ```
 
+Do check `--help` for various options.
+
 SpiderPirate runs on port `15471`, and automatically serves the `www`
 folder, meaning it is independent of any other web server, however
 putting it behind a load balancer or proxy may be useful.
+
+You can change the port number to use with `--port`
 
 After SpiderPirate is installed, you'll want to setup the settings file,
 do this by either overwriting `base_settings.json` directly, or making a
@@ -45,6 +49,9 @@ you'll want to fill out the file. An example of the settings file:
 	}
 }
 ```
+
+You can also load a settings file outside of the root of the project with
+`--settings` and then supplying a path to a different settings file.
 
 Setting any of the proxy settings to `false` will disable that source.
 

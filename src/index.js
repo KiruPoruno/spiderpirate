@@ -8,6 +8,25 @@ const settings = require("./settings");
 
 var sources = fs.readdirSync(join(__dirname, "sources"));
 
+const opts = require("minimist")(process.argv.slice(2), {
+	default: {
+		port: 15471
+	}
+})
+
+if (opts.help) {
+console.log(
+`command line arguments:
+ --help                 shows this help message
+
+ --port PORT            changes which port we use to PORT
+                        default: 15471
+
+ --settings FILE        loads FILE as your settings file
+                        default: $PWD/settings.json`);
+	process.exit();
+}
+
 var sources_object = {};
 var filtered_sources = [];
 var sources_without_extension = [];
@@ -65,7 +84,11 @@ app.get("/sources", (req, res) => {
 
 app.use(express.static(join(__dirname, "../www")));
 
-let port = "15471";
-app.listen(port, () => {
-	console.log(`We're now running on http://localhost:${port}, yay!`);
+if (typeof opts.port !== "number") {
+	console.error(`Port number was not a number: ${opts.port}`);
+	process.exit(1);
+}
+
+app.listen(opts.port, () => {
+	console.log(`We're now running on http://localhost:${opts.port}, yay!`);
 });

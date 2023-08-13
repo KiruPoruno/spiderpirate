@@ -3,6 +3,12 @@ const { join } = require("path");
 
 let dir = join(__dirname, "..");
 
+const opts = require("minimist")(process.argv.slice(2), {
+	string: {
+		settings: join(dir, "settings.json")
+	}
+})
+
 var settings = {
 	// base settings
 	...JSON.parse(fs.readFileSync(
@@ -11,13 +17,12 @@ var settings = {
 }
 
 // user settings
-let user_settings = join(dir, "settings.json");
-if (fs.existsSync(user_settings)) {
+if (fs.existsSync(opts.settings)) {
 	settings = {
 		...settings,
 
 		...JSON.parse(fs.readFileSync(
-			user_settings
+			opts.settings
 		))
 	}
 }
