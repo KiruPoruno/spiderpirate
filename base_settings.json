@@ -2,6 +2,7 @@
 	"proxies": {
 		"tpb": false,
 		"leetx": false,
-		"rarbg": false
+		"rarbg": false,
+		"therarbg": false
 	}
 }

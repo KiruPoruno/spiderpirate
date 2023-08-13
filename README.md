@@ -39,9 +39,9 @@ you'll want to fill out the file. An example of the settings file:
 ```json
 {
 	"proxies": {
-		"rarbg": "<your preferred proxy>",
 		"tpb": "<your preferred proxy>",
-		"leetx": "<your preferred proxy>"
+		"leetx": "<your preferred proxy>",
+		"therarbg": "<your preferred proxy>"
 	}
 }
 ```
