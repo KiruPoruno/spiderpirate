@@ -5,6 +5,8 @@ const { basename } = require("path");
 const size = require("../filesizes");
 const settings = require("../settings");
 
+console = require("../console");
+
 let method = {};
 
 method.pretty_name = "The Pirate Bay";
@@ -61,6 +63,7 @@ method.parse_dom = (data, proxy = method.proxy) => {
 method.search_to_dom = (proxy = method.proxy, query, callback = () => {}) => {
 	query = encodeURI(query);
 
+	console.max_verbose("Getting DOM:", method.pretty_name);
 	get(`https://${proxy}/search/${query}/1/99/0`, (data) => {
 		callback(data);
 	});
@@ -68,6 +71,7 @@ method.search_to_dom = (proxy = method.proxy, query, callback = () => {}) => {
 
 method.search = (proxy = method.proxy, query, callback = () => {}) => {
 	method.search_to_dom(proxy, query, (data) => {
+		console.max_verbose("Parsing DOM:", method.pretty_name);
 		callback(method.parse_dom(data));
 	})
 }

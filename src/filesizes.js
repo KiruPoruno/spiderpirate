@@ -42,7 +42,6 @@ function interpret_size_string(string) {
 	}
 
 	if (! map[text]) {
-		console.log(string);
 		return false;
 	}
 

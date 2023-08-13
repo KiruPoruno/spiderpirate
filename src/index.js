@@ -1,13 +1,3 @@
-const fs = require("fs");
-const { join } = require("path");
-const express = require("express");
-const app = express();
-
-const query = require("./query");
-const settings = require("./settings");
-
-var sources = fs.readdirSync(join(__dirname, "sources"));
-
 const opts = require("minimist")(process.argv.slice(2), {
 	default: {
 		port: 15471
@@ -23,9 +13,26 @@ console.log(
                         default: 15471
 
  --settings FILE        loads FILE as your settings file
-                        default: $PWD/settings.json`);
+                        default: $PWD/settings.json
+
+ --quiet                turns off all log messages except errors
+ --very-quiet           turns off ALL log messages no exceptions!
+ --verbose              turns on extra more verbose log messages
+ --max-verbose          turns on even more verbose log messages`);
 	process.exit();
 }
+
+const fs = require("fs");
+const { join } = require("path");
+const express = require("express");
+const app = express();
+
+const query = require("./query");
+const settings = require("./settings");
+
+console = require("./console");
+
+var sources = fs.readdirSync(join(__dirname, "sources"));
 
 var sources_object = {};
 var filtered_sources = [];
@@ -54,7 +61,12 @@ for (let i = 0; i < sources.length; i++) {
 sources = filtered_sources;
 
 app.get("/search/:query", (req, res) => {
+	console.verbose(`Searching for: "${req.params.query}"`);
 	query(req.params.query, (data) => {
+		console.verbose(
+			`Sending search results for: "${req.params.query}"`
+		)
+
 		return res.send(data);
 	});
 })
@@ -66,19 +78,30 @@ app.get("/search/:source/:query", (req, res) => {
 		return res.send();
 	}
 
-	let source_module = require(
+	let module = require(
 		join(__dirname, "sources", source)
 	)
 
-	source_module.search(
+	console.verbose(
+		`Searching on ${module.pretty_name},`,
+		`for: "${req.params.query}"`
+	)
+
+	module.search(
 		settings.proxies[source], 
 		req.params.query, (data) => {
+			console.verbose(
+				`Sending search results on ${module.pretty_name}, for:`,
+				`"${req.params.query}"`,
+			)
+
 			return res.send(data);
 		}
 	)
 })
 
 app.get("/sources", (req, res) => {
+	console.verbose("Sent list of available sources");
 	return res.send(sources_object);
 })
 
@@ -90,5 +113,5 @@ if (typeof opts.port !== "number") {
 }
 
 app.listen(opts.port, () => {
-	console.log(`We're now running on http://localhost:${opts.port}, yay!`);
+	console.info(`Running on port: ${opts.port}`);
 });
