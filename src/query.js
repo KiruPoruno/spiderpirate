@@ -37,8 +37,7 @@ function search(query, callback = () => {}) {
 		let source_file = require(source);
 
 		source_file.search(
-			settings.proxies[proxy],
-			query,
+			settings.proxies[proxy], query,
 			(res) => {
 				results = [
 					...res,
@@ -59,7 +58,7 @@ function search(query, callback = () => {}) {
 	let check_status = setInterval(() => {
 		if (done == enabled_sources.length) {
 			clearInterval(check_status);
-			callback(results)
+			callback(results);
 		}
 	}, 150)
 }

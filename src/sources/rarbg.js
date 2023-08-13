@@ -65,7 +65,7 @@ method.search_to_dom = (proxy = method.proxy, query, callback = () => {}) => {
 	console.max_verbose("Getting DOM:", method.pretty_name);
 	get(`https://${proxy}/search/?search=${query}`, (data) => {
 		callback(data);
-	});
+	})
 }
 
 method.search = (proxy = method.proxy, query, callback = () => {}) => {

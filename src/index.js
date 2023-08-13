@@ -68,7 +68,7 @@ app.get("/search/:query", (req, res) => {
 		)
 
 		return res.send(data);
-	});
+	})
 })
 
 app.get("/search/:source/:query", (req, res) => {
@@ -114,4 +114,4 @@ if (typeof opts.port !== "number") {
 
 app.listen(opts.port, () => {
 	console.info(`Running on port: ${opts.port}`);
-});
+})
