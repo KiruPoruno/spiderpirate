@@ -267,29 +267,8 @@ input.addEventListener("keyup", () => {
 })
 
 document.body.addEventListener("click", (e) => {
-	let element = false;
-	let elements = e.path;
-	let is_content = false;
-	for (let i = 0; i < elements.length; i++) {
-		if (! elements[i] || ! elements[i].classList) {
-			continue;
-		}
-
-		if (elements[i].classList.contains("content")) {
-			is_content = true;
-		}
-
-		if (elements[i].classList.contains("result") && ! is_content) {
-			element = elements[i];
-		}
+	let result = e.target.closest(".result");
+	if (result && ! e.target.closest(".content")) {
+		result.querySelector(".content").classList.toggle("open");
 	}
-
-	if (is_content || ! element) {return}
-
-	let content = element.querySelector(".content");
-	if (! content || ! content.classList) {
-		return;
-	}
-
-	element.querySelector(".content").classList.toggle("open");
 })
